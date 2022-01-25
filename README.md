@@ -128,17 +128,24 @@ docker-compose --version
 ~~~
 
 ## CONTENEDORES DOCKER
-* [traefik](traefik/) - reverse proxy and SSL manager
-* [fail2ban](fail2ban/) - security tool (ban IP)
-* [freshrss](freshrss/) - RSS feed aggregator
-* [gotify](gotify/) - notification service
-* [nextcloud](nextcloud/) - file-hosting software system
-* [transmission](transmission/) - fast, easy, and free BitTorrent client
-* [trilium](trilium/) - hierarchical note-taking application
-* [vaultwarden](vaultwarden/) - password manager
-* [watchtower](watchtower/) - automatic docker images update
-* [wireguard](wireguard) - combination of WireGuard, PiHole, and Unbound
-* [wordpress](wordpress/) - blogging tool with a content management system (CMS)
+* [traefik](traefik/) - reverse proxy and SSL manager.
+* [Adguard](Adguard/) -  Network-wide ads & trackers blocking DNS server.
+* [Grafana](Grafana/) - The open-source platform for monitoring and observability.
+* [Heimdall](Heimdall/) - Heimdall is an elegant solution to organise all your web applications.
+* [Pihole](Pihole/) - The Pi-hole® is a DNS sinkhole that protects your devices from unwanted content without installing any client-side software.
+* [Portainer](Portainer/) - Portainer is a lightweight service delivery platform for containerized applications that can be used to manage Docker, Swarm, Kubernetes and ACI environments.
+* [syncthing](syncthing/) - Syncthing is a continuous file synchronization program.
+* [wikijs](wikijs/) - Wiki.js is an open source project that has been made possible due to the generous contributions by community backers.
+* [fail2ban](fail2ban/) - security tool (ban IP).
+* [freshrss](freshrss/) - RSS feed aggregator.
+* [gotify](gotify/) - notification service.
+* [nextcloud](nextcloud/) - file-hosting software system.
+* [transmission](transmission/) - fast, easy, and free BitTorrent client.
+* [trilium](trilium/) - hierarchical note-taking application.
+* [vaultwarden](vaultwarden/) - password manager.
+* [watchtower](watchtower/) - automatic docker images update.
+* [wireguard](wireguard) - Wireguard is a selfhosted vpn.
+* [wordpress](wordpress/) - WordPress is a blogging tool with a content management system (CMS).
 
 
 # Information
