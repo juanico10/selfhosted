@@ -1,0 +1,36 @@
+--- 
+version: "3.3" 
+  
+volumes: 
+  syncthing: 
+    driver: local 
+  
+services: 
+  syncthing: 
+    image: syncthing/syncthing:latest 
+    container_name: sync 
+    restart: always 
+    networks: 
+      - red 
+    environment: 
+      - PUID=1000 
+      - PGID=1000 
+      - TZ=Europe/Madrid 
+    volumes: 
+      - /patch/to/data/syncthing:/var/syncthing 
+      - /patch/to/data/syncthing/appdata/config:/config 
+    labels: 
+      # syncthing 
+      - "traefik.enable=true" 
+      - "traefik.http.routers.syncthing.rule=Host(`domain`)" 
+      - "traefik.http.routers.syncthing.entrypoints=websecure" 
+      - "traefik.http.routers.syncthing.tls=true" 
+      - "traefik.http.routers.syncthing.tls.certresolver=lets-encrypt" 
+      - "traefik.http.services.syncthing.loadbalancer.server.port=8384" 
+      - "traefik.http.services.syncthing.loadbalancer_syncthing.server.port=22000" 
+      - "traefik.http.services.syncthing.loadbalancer_syncthing_udp.server.port=21027/udp" 
+      - "traefik.http.middlewares.syncthing.headers.sslredirect=true"
+  
+networks: 
+  red: 
+    external: true 

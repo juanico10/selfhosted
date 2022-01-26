@@ -1,0 +1,31 @@
+version: "3.3" 
+  
+services: 
+  heimdall: 
+    image: linuxserver/heimdall:latest 
+    container_name: heimdall 
+    networks: 
+      - red 
+    restart: always 
+    environment: 
+      - PUID=1000 
+      - PGID=1000 
+      - TZ=Europe/Madrid 
+    volumes: 
+      - /patch/to/data/heimdall/config:/config 
+    labels: 
+      # heimdall 
+      - "traefik.enable=true" 
+      - "traefik.http.routers.heimdall.rule=Host(`domain`)" 
+      - "traefik.http.routers.heimdall.entrypoints=websecure" 
+      - "traefik.http.routers.heimdall.tls=true" 
+      - "traefik.http.routers.heimdall.tls.certresolver=lets-encrypt"
+      - "traefik.http.services.heimdall.loadbalancer.server.port=80" 
+      - "traefik.http.middlewares.heimdall.headers.sslredirect=true" 
+volumes: 
+  heimdall: 
+    driver: local 
+     
+networks: 
+  red: 
+    external: true

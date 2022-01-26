@@ -1,0 +1,58 @@
+version: "3" 
+  
+volumes: 
+  mysql: 
+    driver: local 
+  wordpress: 
+    driver: local 
+  
+services: 
+  mysql_wordpress: 
+    restart: always 
+    image: mariadb 
+    container_name: mariadb_wordpress 
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed 
+    networks: 
+      - internal 
+    environment: 
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWD}  # Requested, set the root's password of MySQL service.
+      - MYSQL_PASSWORD=${DB_PASSWD}
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_LOG_CONSOLE=true
+    volumes: 
+      - /patch/to/data/wordpress/mysql:/var/lib/mysql 
+    labels: 
+      - "traefik.enable=false" 
+  
+  blog: 
+    image: wordpress:latest 
+    container_name: wordpress 
+    restart: always 
+    networks: 
+      - internal 
+      - red 
+    depends_on: 
+      - mysql_wordpress 
+    labels: 
+      # wordpress 
+      - "traefik.enable=true" 
+      - "traefik.http.routers.wordpress.rule=Host(`${WIKIJS_DOMAIN}`)" 
+      - "traefik.http.routers.wordpress.entrypoints=websecure" 
+      - "traefik.http.routers.wordpress.tls=true" 
+      - "traefik.http.routers.wordpress.tls.certresolver=lets-encrypt" 
+      - "traefik.http.services.wordpress.loadbalancer.server.port=80" 
+      - "traefik.http.middlewares.wordpress.headers.sslredirect=true" 
+    environment: 
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWD} 
+      WORDPRESS_DB_HOST: mysql_wordpress 
+      WORDPRESS_DB_NAME: wordpress 
+      WORDPRESS_DB_USER: wordpress 
+    volumes: 
+      - /patch/to/data/wordpress/wordpress:/var/www/html 
+  
+networks: 
+  red: 
+    external: true 
+  internal: 
+    external: false 

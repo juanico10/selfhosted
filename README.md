@@ -5,7 +5,7 @@ Project to install Docker and Docker-Compose in Ubuntu, Raspberry or Nanopi
 
 <p align="center">
     <a href="https://www.docker.com/">
-        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/blob/main/Docker.png.png" alt="Docker">
+        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/blob/main/Docker.png" alt="Docker">
     </a>
     <br>
     <strong>Make your projects come to life with Docker</strong>

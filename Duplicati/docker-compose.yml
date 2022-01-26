@@ -1,0 +1,38 @@
+--- 
+version: "3.3" 
+  
+volumes: 
+  duplicati: 
+    driver: local 
+  
+services: 
+  duplicati: 
+    image: lscr.io/linuxserver/duplicati 
+    container_name: duplicati 
+    restart: always 
+    networks: 
+      - red 
+    environment: 
+      - PUID=1000 
+      - PGID=1000 
+      - TZ=Europe/Madrid 
+    labels: 
+      # duplicati 
+      - "traefik.enable=true" 
+      - "traefik.http.routers.duplicati.rule=Host(`domain`)" 
+      - "traefik.http.routers.duplicati.entrypoints=websecure" 
+      - "traefik.http.routers.duplicati.tls=true" 
+      - "traefik.http.routers.duplicati.tls.certresolver=lets-encrypt" 
+      - "traefik.http.routers.duplicati.middlewares=securedupli" 
+      - "traefik.http.services.duplicati.loadbalancer.server.port=8200" 
+      - "traefik.http.middlewares.duplicati.headers.sslredirect=true" 
+      - "traefik.http.middlewares.securedupli.chain.middlewares=duplicati,lista-blanca-duplicati" 
+      - "traefik.http.middlewares.lista-blanca-duplicati.ipwhitelist.sourcerange=XX.XX.XX.XX, XX.XX.XX.XX" 
+    volumes: 
+      - /patch/to/data/duplicati/duplicati:/config 
+      - /patch/to/data/duplicati/duplicati:/backups 
+      - /patch/to/data/duplicati/duplicati:/source 
+  
+networks: 
+  red: 
+    external: true 

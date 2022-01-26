@@ -1,0 +1,62 @@
+version: "3" 
+  
+volumes: 
+  mysql: 
+    driver: local 
+  wikijs: 
+    driver: local 
+  
+services: 
+  mysql_wikijs: 
+    restart: always 
+    image: mariadb 
+    container_name: mysql_wikijs 
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed 
+    networks: 
+      - internal 
+    environment: 
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWD}  # Requested, set the root's password of MySQL service.
+      - MYSQL_PASSWORD=${DB_PASSWD}
+      - MYSQL_DATABASE=wikijs
+      - MYSQL_USER=wikijs
+      - MYSQL_LOG_CONSOLE=true
+    volumes: 
+      - /patch/to/data/wikijs/mysql:/var/lib/mysql 
+    labels: 
+      - "traefik.enable=false" 
+  
+  wikijs: 
+    image: requarks/wiki 
+    container_name: wikijs 
+    restart: always 
+    environment: 
+      - DB_TYPE=mariadb 
+      - DB_HOST=mysql_wikijs 
+      - DB_PORT=3306 
+      - DB_USER=wikijs 
+      - DB_PASS=${DB_PASSWD} 
+      - DB_NAME=wikijs 
+      - PUID=1000 
+      - PGID=1000 
+      - TZ=Europe/Madrid 
+    volumes: 
+      - /patch/to/data/wikijs/wikijs:/config 
+      - /patch/to/data/wikijs/wikijs:/data 
+    labels: 
+      # wikijs 
+      - "traefik.enable=true" 
+      - "traefik.http.routers.wikijs.rule=Host(`${WIKIJS_DOMAIN}`)" 
+      - "traefik.http.routers.wikijs.entrypoints=websecure" 
+      - "traefik.http.routers.wikijs.tls=true" 
+      - "traefik.http.routers.wikijs.tls.certresolver=lets-encrypt" 
+      - "traefik.http.services.wikijs.loadbalancer.server.port=3000" 
+      - "traefik.http.middlewares.wikijs.headers.sslredirect=true" 
+    networks: 
+      - red 
+      - internal 
+  
+networks: 
+  red: 
+    external: true 
+  internal: 
+    external: false 
