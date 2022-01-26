@@ -4,7 +4,7 @@
 
 <p align="center">
     <a href="https://containrrr.dev/watchtower/">
-        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/tree/main/watchtower/watchtower.png" alt="watchtower">
+        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/blob/main/watchtower/watchtower.png" alt="watchtower">
     </a>
     <br>
 </p>

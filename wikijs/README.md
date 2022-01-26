@@ -4,7 +4,7 @@
 
 <p align="center">
     <a href="https://js.wiki/">
-        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/tree/main/wikijs/wikijs.png" alt="wikijs">
+        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/blob/main/wikijs/wikijs.png" alt="wikijs">
     </a>
     <br>
 </p>

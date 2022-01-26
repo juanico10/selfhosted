@@ -4,7 +4,7 @@
 
 <p align="center">
     <a href="https://github.com/zadam/trilium/wiki/">
-        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/tree/main/trilium/trilium.png" alt="trilium">
+        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/blob/main/trilium/trilium.png" alt="trilium">
     </a>
     <br>
 </p>

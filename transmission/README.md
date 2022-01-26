@@ -4,7 +4,7 @@
 
 <p align="center">
     <a href="https://transmissionbt.com/">
-        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/tree/main/transmission/transmission.png" alt="transmission">
+        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/blob/main/transmission/transmission.png" alt="transmission">
     </a>
     <br>
 </p>

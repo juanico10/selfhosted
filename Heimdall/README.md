@@ -4,7 +4,7 @@
 
 <p align="center">
     <a href="https://heimdall.site/">
-        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/tree/main/Heimdall/heimdall.png" alt="heimdall">
+        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/blob/main/Heimdall/heimdall.png" alt="heimdall">
     </a>
     <br>
 </p>

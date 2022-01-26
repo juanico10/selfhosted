@@ -4,7 +4,7 @@
 
 <p align="center">
     <a href="https://www.portainer.io/">
-        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/tree/main/Portainer/portainer.png" alt="portainer">
+        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/blob/main/Portainer/portainer.png" alt="portainer">
     </a>
     <br>
 </p>

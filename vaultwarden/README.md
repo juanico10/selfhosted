@@ -4,7 +4,7 @@
 
 <p align="center">
     <a href="https://github.com/dani-garcia/vaultwarden">
-        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/tree/main/vaultwarden/bitwarden.png" alt="bitwarden">
+        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/blob/main/vaultwarden/bitwarden.png" alt="bitwarden">
     </a>
     <br>
 </p>

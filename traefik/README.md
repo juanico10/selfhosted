@@ -1,8 +1,16 @@
 # About
 
+#
+
 <p align="center">
-<img src="../_utilities/traefik.logo.png" alt="Traefik" title="Traefik" />
+    <a href="https://traefik.io/">
+        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/blob/main/traefik/traefik.logo.png" alt="traefik">
+    </a>
+    <br>
 </p>
+<!-- markdownlint-enable MD033 -->
+
+#
 
 Traefik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy. 
 It is an Edge Router, it means that it's the door to your platform, and that it intercepts and routes every incoming request.
