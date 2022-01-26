@@ -1,8 +1,16 @@
 # About
 
+#
+
 <p align="center">
-<img src="../_utilities/wordpress.png" width="400" alt="wordpress" title="wordpress" />
+    <a href="https://wordpress.org">
+        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/blob/main/wordpress/wordpress.png" alt="wordpress">
+    </a>
+    <br>
 </p>
+<!-- markdownlint-enable MD033 -->
+
+#
 
 WordPress is a free and open source blogging tool and a content management system (CMS) based on PHP and MySQL, which runs on a web hosting service.
 

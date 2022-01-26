@@ -1,8 +1,16 @@
 # About
 
+#
+
 <p align="center">
-<img src="../_utilities/gotify.png" width="400" alt="gotify" title="gotify" />
+    <a href="https://gotify.net/docs/index">
+        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/blob/main/gotify/gotify.png" alt="gotify">
+    </a>
+    <br>
 </p>
+<!-- markdownlint-enable MD033 -->
+
+#
 
 Gotify is a simple server for sending and receiving notification messages. It is used a lot throughout this guide for services such as backups and automatic updates, a must-have self-hosted solution.
 

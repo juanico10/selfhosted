@@ -1,8 +1,16 @@
 # About
 
+#
+
 <p align="center">
-<img src="../_utilities/watchtower.png" width="400" alt="watchtower" title="watchtower" />
+    <a href="https://containrrr.dev/watchtower/">
+        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/tree/main/watchtower/watchtower.png" alt="watchtower">
+    </a>
+    <br>
 </p>
+<!-- markdownlint-enable MD033 -->
+
+#
 
 Watchtower is a container-based solution for automating Docker container base image updates. It will pull down your new image, gracefully shut down your existing container and restart it with the same options that were used when it was deployed initially.
 

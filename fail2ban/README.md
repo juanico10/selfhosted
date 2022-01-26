@@ -1,8 +1,16 @@
 # About
 
+#
+
 <p align="center">
-<img src="../_utilities/fail2ban.png" alt="Fail2ban" title="fail2ban" />
+    <a href="https://www.fail2ban.org">
+        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/blob/main/fail2ban/fail2ban.png" alt="fail2ban">
+    </a>
+    <br>
 </p>
+<!-- markdownlint-enable MD033 -->
+
+#
 
 Fail2ban scans log files and bans IPs that show the malicious signs.
 

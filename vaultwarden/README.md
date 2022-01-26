@@ -1,8 +1,16 @@
 # About
 
+#
+
 <p align="center">
-<img src="../_utilities/bitwarden.svg.png" width="400" alt="bitwarden" title="bitwarden" />
+    <a href="https://github.com/dani-garcia/vaultwarden">
+        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/tree/main/vaultwarden/bitwarden.png" alt="bitwarden">
+    </a>
+    <br>
 </p>
+<!-- markdownlint-enable MD033 -->
+
+#
 
 Vaultwarden is an alternative implementation of the Bitwarden server API written in Rust and compatible with upstream Bitwarden clients, it is perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
 

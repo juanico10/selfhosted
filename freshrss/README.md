@@ -1,8 +1,16 @@
 # About
 
+#
+
 <p align="center">
-<img src="../_utilities/freshrss.png" alt="freshrss" title="freshrss" />
+    <a href="https://freshrss.github.io/FreshRSS/en/admins/01_Index.html">
+        <img src="https://github.com/JuanRodenas/Docker-container-selfhosted/blob/main/freshrss/freshrss.png" alt="freshrss">
+    </a>
+    <br>
 </p>
+<!-- markdownlint-enable MD033 -->
+
+#
 
 FreshRSS is a self-hosted RSS feed aggregator
 
