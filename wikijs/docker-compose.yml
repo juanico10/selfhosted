@@ -9,9 +9,9 @@ volumes:
 services: 
   mysql_wikijs: 
     restart: always 
-    image: mariadb 
+    image: mariadb:focal 
     container_name: mysql_wikijs 
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed 
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     networks: 
       - internal 
     environment: 
