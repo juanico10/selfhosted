@@ -145,7 +145,7 @@ docker-compose --version
 * [vaultwarden](vaultwarden/) - password manager.
 * [watchtower](watchtower/) - automatic docker images update.
 * [wireguard](wireguard) - Wireguard is a selfhosted vpn.
-* [wordpress](wordpress/) - WordPress is a blogging tool with a content management system (CMS).
+* [wordpress](https://github.com/JuanRodenas/Wordpress) - WordPress is a blogging tool with a content management system (CMS).
 
 
 # Information
