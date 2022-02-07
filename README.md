@@ -144,7 +144,7 @@ docker-compose --version
 * [trilium](trilium/) - hierarchical note-taking application.
 * [vaultwarden](vaultwarden/) - password manager.
 * [watchtower](watchtower/) - automatic docker images update.
-* [wireguard](wireguard) - Wireguard is a selfhosted vpn.
+* [wireguard](https://github.com/JuanRodenas/Wireguard) - Wireguard is a selfhosted vpn.
 * [wordpress](https://github.com/JuanRodenas/Wordpress) - WordPress is a blogging tool with a content management system (CMS).
 
 
