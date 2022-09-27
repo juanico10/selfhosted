@@ -1,0 +1,55 @@
+version: "3"
+services:
+  bookstack:
+    image: lscr.io/linuxserver/bookstack
+    container_name: bookstack
+    environment:
+      - PUID=${PUID}
+      - PGID=${GUID}
+      - APP_URL=${FQDN}
+      - DB_HOST=bookstack_db
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_DATABASE=${DB_DATABASE}
+    volumes:
+      - ./config:/config
+    restart: unless-stopped
+    depends_on:
+      - bookstack_db
+    networks:
+       - internal
+       - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.bookstack.loadbalancer.server.port=80
+      - traefik.http.routers.bookstack.entrypoints=web
+      - traefik.http.routers.bookstack.rule=Host(`${FQDN}`)
+      - traefik.http.middlewares.bookstack-https-redirect.redirectscheme.scheme=websecure
+      - traefik.http.routers.bookstack.middlewares=bookstack-https-redirect
+      - traefik.http.routers.bookstack-secure.entrypoints=websecure
+      - traefik.http.routers.bookstack-secure.rule=Host(`${FQDN}`)
+      - traefik.http.routers.bookstack-secure.tls=true
+      - traefik.http.routers.bookstack-secure.tls.certresolver=letsencrypt
+
+  bookstack_db:
+    image: lscr.io/linuxserver/mariadb
+    container_name: bookstack_db
+    environment:
+      - PUID=${PUID}
+      - PGID=${GUID}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - TZ=${TZ}
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+    volumes:
+      - ./config:/config
+    restart: unless-stopped
+    networks:
+       - internal
+
+networks:
+  internal:
+    external: false
+  proxy:
+    external: true

@@ -1,0 +1,55 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    networks:
+      - internal
+    volumes:
+      - ./dnote_data:/var/lib/postgresql/data
+    restart: always
+
+  dnote:
+    image: dnote/dnote:latest
+    environment:
+      GO_ENV: PRODUCTION
+      DBSkipSSL: "true"
+      DBHost: postgres
+      DBPort: 5432
+      DBName: ${POSTGRES_DB}
+      DBUser: ${POSTGRES_USER}
+      DBPassword: ${POSTGRES_PASSWORD}
+      WebURL: ${FQDN}
+      OnPremise: "true"
+      SmtpHost:
+      SmtpPort:
+      SmtpUsername:
+      SmtpPassword:
+      DisableRegistration: "false"
+    depends_on:
+      - postgres
+    restart: always
+    networks:
+      - internal
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.dnote.loadbalancer.server.port=3000
+      - traefik.http.routers.dnote.entrypoints=web
+      - traefik.http.routers.dnote.rule=Host(`${FQDN}`)
+      - traefik.http.middlewares.dnote-https-redirect.redirectscheme.scheme=websecure
+      - traefik.http.routers.dnote.middlewares=dnote-https-redirect
+      - traefik.http.routers.dnote-secure.entrypoints=websecure
+      - traefik.http.routers.dnote-secure.rule=Host(`${FQDN}`)
+      - traefik.http.routers.dnote-secure.tls=true
+      - traefik.http.routers.dnote-secure.tls.certresolver=letsencrypt
+
+networks:
+  internal:
+    external: false
+  proxy:
+    external: true

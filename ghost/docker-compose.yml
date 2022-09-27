@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+
+  ghost:
+    image: ghost:4-alpine
+    restart: unless-stopped
+    volumes:
+      - ./blog:/var/lig/ghost/content
+    environment:
+      - url=${FQDN}
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.ghost.loadbalancer.server.port=2368
+      - traefik.http.routers.ghost.entrypoints=web
+      - traefik.http.routers.ghost.rule=Host(`${FQDN}`)
+      - traefik.http.middlewares.ghost-https-redirect.redirectscheme.scheme=websecure
+      - traefik.http.routers.ghost.middlewares=ghost-https-redirect
+      - traefik.http.routers.ghost-secure.entrypoints=websecure
+      - traefik.http.routers.ghost-secure.rule=Host(`${FQDN}`)
+      - traefik.http.routers.ghost-secure.tls=true
+      - traefik.http.routers.ghost-secure.tls.certresolver=letsencrypt
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
