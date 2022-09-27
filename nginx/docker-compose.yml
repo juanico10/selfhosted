@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:stable
+    container_name: nginx
+    restart: unless-stopped
+    volumes:
+      - ./html:/html
+      - ./nginx:/etc/nginx:ro
+    depends_on:
+      - servicio    # Poner el servicio
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.nginx.loadbalancer.server.port=8080
+      - traefik.http.routers.nginx.entrypoints=web
+      - traefik.http.routers.nginx.rule=Host(`${FQDN}`)
+      - traefik.http.middlewares.nginx-https-redirect.redirectscheme.scheme=websecure
+      - traefik.http.routers.nginx.middlewares=nginx-https-redirect
+      - traefik.http.routers.nginx-secure.entrypoints=websecure
+      - traefik.http.routers.nginx-secure.rule=Host(`${FQDN}`)
+      - traefik.http.routers.nginx-secure.tls=true
+      - traefik.http.routers.nginx-secure.tls.certresolver=letsencrypt
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
