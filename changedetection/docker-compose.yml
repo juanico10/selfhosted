@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+  changedetection:
+    ports:
+      - '5000:5000'
+    volumes:
+      - ./datastore-volume:/datastore
+    container_name: changedetection.io
+    image: dgtlmoon/changedetection.io
+    hostname: iperf3
+    restart: always
+    network_mode: "host"
+    security_opt:
+      - no-new-privileges
+    environment:
+      - PUID=1000
+      - PGID=1000
