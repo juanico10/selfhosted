@@ -1,24 +1,45 @@
-# Installation
+## CodiMD es un editor de código abierto que ofrece colaboración en tiempo real, además de ser compatible con Markdown.
 
-## Requirements
+##Introducción
 
-* [Traefik up and running](../traefik).
-* A subdomain of your choice, this example uses `codimd`.
-  * You should be able to create a subdomain with your DNS provider, use a `A record` with the same IP address as your root domain.
+Una poderosa herramienta que te permite colaborar con tu equipo de desarrollo en tiempo real, y lo mejor, usando Markdown para editar documentos.
 
-## Configuration
+CodiMD se creó y se basó en el código fuente de HackMD.
 
-Replace the environment variables in `.env` with your own, then run :
+Con esta herramienta, puede alojar y controlar fácilmente el contenido de su proyecto.
+
+El soporte para Markdown en CodiMD es excelente, incluso es compatible con la sintaxis de CommonMark.
+
+Algunos plugins interesantes de la herramienta:
+
+    MathJax - Utilizando para representar fórmulas matemáticas.
+    Mermaid & Graphviz – Diagramación de UML.
+    Vega-lite - Para aquellos que necesitan ver datos.
+    Emojis - Para poner un poco más de expresión en sus documentos.
+
+El sitio web oficial de CodiMD está en [Github](https://github.com/hackmdio/codimd)
+
+# Instalación
+
+## Requisitos
+
+* [Traefik en funcionamiento](../traefik).
+* Un subdominio de su elección, este ejemplo utiliza `codimd`.
+  * Debería poder crear un subdominio con su proveedor de DNS, utilice un `A record` o `CNAME` con la misma dirección IP que su dominio raíz.
+
+## Configuración
+
+Reemplace las variables de entorno en `.env` con las suyas propias, luego ejecute :
 
 ```bash
 sudo docker-compose up -d
 ```
 
-You should now be able to access the codimd setup instruction, it is quite straigthforward and nothing is required. 
+Ahora debería ser capaz de acceder a la instrucción de configuración de codimd, es bastante straigthforward y no se requiere nada. 
 
-# Update
+# Actualización
 
-The image is automatically updated with [watchtower](../watchtower) thanks to the following label :
+La imagen se actualiza automáticamente con [watchtower](../watchtower) gracias a la siguiente etiqueta :
 
 ```yaml
   # Watchtower Update
