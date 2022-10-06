@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  wallabag:
+    image: wallabag/wallabag
+    security_opt:
+      - no-new-privileges:true
+    env_file:
+      - .env
+    container_name: wallabag
+    restart: unless-stopped
+    environment:
+      - SYMFONY__ENV__DOMAIN_NAME="https://${DOMAIN}"
+      - SYMFONY__ENV__SERVER_NAME="${NAME}"
+    volumes:
+      - ./images:/var/www/wallabag/web/assets/images
+      - ./data:/var/www/wallabag/data
+    networks:
+      - proxy
+      - internal 
+    depends_on:
+      - wgredis
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.freshrss.loadbalancer.server.port=80
+      - traefik.http.routers.freshrss.entrypoints=web
+      - traefik.http.routers.freshrss.rule=Host(`${FQDN}`)
+      - traefik.http.middlewares.freshrss-https-redirect.redirectscheme.scheme=websecure
+      - traefik.http.routers.freshrss.middlewares=freshrss-https-redirect
+      - traefik.http.routers.freshrss-secure.entrypoints=websecure
+      - traefik.http.routers.freshrss-secure.rule=Host(`${FQDN}`)
+      - traefik.http.routers.freshrss-secure.tls=true
+      - traefik.http.routers.freshrss-secure.tls.certresolver=letsencrypt
+
+  wgredis:
+    image: redis:latest
+    container_name: wgredis
+    restart: unless-stopped
+    networks:
+      - internal
+
+
+networks:
+  proxy:
+    external: true
+  internal:
+    external: false
