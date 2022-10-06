@@ -1,55 +1,63 @@
+---
 version: "3"
+
 services:
   bookstack:
-    image: lscr.io/linuxserver/bookstack
+    image: lscr.io/linuxserver/bookstack:latest
     container_name: bookstack
+    env_file:
+      - .env
+    security_opt:
+      - no-new-privileges:true
     environment:
-      - PUID=${PUID}
-      - PGID=${GUID}
-      - APP_URL=${FQDN}
-      - DB_HOST=bookstack_db
-      - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASS}
-      - DB_DATABASE=${DB_DATABASE}
+      - APP_URL=${URL}
+      - DB_HOST=bookstack-db:3306
+      - DB_USER=${USER}
+      - DB_PASS=${PASS}
+      - DB_DATABASE=${DATABASE}
     volumes:
-      - ./config:/config
-    restart: unless-stopped
+      - ./bookstack:/config
+    restart: always
     depends_on:
-      - bookstack_db
-    networks:
-       - internal
-       - proxy
+      - bookstack-db
     labels:
       - traefik.enable=true
-      - traefik.http.services.bookstack.loadbalancer.server.port=80
-      - traefik.http.routers.bookstack.entrypoints=web
-      - traefik.http.routers.bookstack.rule=Host(`${FQDN}`)
-      - traefik.http.middlewares.bookstack-https-redirect.redirectscheme.scheme=websecure
-      - traefik.http.routers.bookstack.middlewares=bookstack-https-redirect
-      - traefik.http.routers.bookstack-secure.entrypoints=websecure
-      - traefik.http.routers.bookstack-secure.rule=Host(`${FQDN}`)
-      - traefik.http.routers.bookstack-secure.tls=true
-      - traefik.http.routers.bookstack-secure.tls.certresolver=letsencrypt
-
-  bookstack_db:
-    image: lscr.io/linuxserver/mariadb
-    container_name: bookstack_db
-    environment:
-      - PUID=${PUID}
-      - PGID=${GUID}
-      - MYSQL_ROOT_PASSWORD=${DB_PASS}
-      - TZ=${TZ}
-      - MYSQL_DATABASE=${DB_DATABASE}
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PASS}
-    volumes:
-      - ./config:/config
-    restart: unless-stopped
+      - traefik.http.services.codimd.loadbalancer.server.port=3000
+      - traefik.http.routers.codimd.entrypoints=web
+      - traefik.http.routers.codimd.rule=Host(`${FQDN}`)
+      - traefik.http.middlewares.codimd-https-redirect.redirectscheme.scheme=websecure
+      - traefik.http.routers.codimd.middlewares=codimd-https-redirect
+      - traefik.http.routers.codimd-secure.entrypoints=websecure
+      - traefik.http.routers.codimd-secure.rule=Host(`${FQDN}`)
+      - traefik.http.routers.codimd-secure.tls=true
+      - traefik.http.routers.codimd-secure.tls.certresolver=letsencrypt
     networks:
-       - internal
+      - proxy
+      - internal
+
+  bookstack-db:
+    restart: always
+    image: mariadb:focal
+    container_name: bookstack-db
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-file-per-table=1 --skip-innodb-read-only-compressed --default-authentication-plugin=mysql_native_password
+    env_file:
+      - .env
+    networks:
+      - internal
+    environment:
+      - TZ=Europe/Madrid
+      - MYSQL_ROOT_PASSWORD=${PASS}
+      - MYSQL_PASSWORD=${PASS}
+      - MYSQL_DATABASE=${DATABASE}
+      - MYSQL_USER=${USER}
+    volumes:
+      - ./bookstack_db:/var/lib/mysql
+    labels:
+      - traefik.enable=false
+
 
 networks:
-  internal:
-    external: false
   proxy:
     external: true
+  internal:
+    external: false

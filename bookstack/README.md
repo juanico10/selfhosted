@@ -1,4 +1,4 @@
-# Installation
+# About
 
 ## Requirements
 
@@ -6,18 +6,13 @@
 * A subdomain of your choice, this example uses `bookstack`.
   * You should be able to create a subdomain with your DNS provider, use a `A record` with the same IP address as your root domain.
 
-* Port default
-```bash
-  bookstack:
-    ports:
-      - 8080:80
-```
-
 ## Configuration
 
 Replace the environment variables in `.env` with your own, then run :
 
 ```bash
+mv sample.env .env
+sed -i "s/bookstack.example.org/el_fqdn_que_quieras/g" .env
 sudo docker-compose up -d
 ```
 
@@ -31,8 +26,3 @@ The image is automatically updated with [watchtower](../watchtower) thanks to th
   # Watchtower Update
   - "com.centurylinklabs.watchtower.enable=true"
 ```
-
-Default credentials:
-
-  * username: admin@admin.com
-  * password: password
