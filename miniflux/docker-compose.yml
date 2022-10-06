@@ -1,0 +1,52 @@
+version: "3.7"
+
+services:
+  miniflux:
+    image: miniflux/miniflux:latest
+    init: true
+    depends_on:
+      - db
+    restart: unless-stopped
+    container_name: miniflux
+    env_file:
+      - .env
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/usr/bin/miniflux", "-healthcheck", "auto"]
+    networks:
+      - proxy
+      - internal
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.miniflux.entrypoints=web
+      - traefik.http.services.miniflux.loadbalancer.server.port=8080
+      - traefik.http.routers.miniflux.rule=Host(`${FQDN}`)
+      - traefik.http.middlewares.miniflux-https-redirect.redirectscheme.scheme=websecure
+      - traefik.http.routers.miniflux.middlewares=miniflux-https-redirect
+      - traefik.http.routers.miniflux-secure.entrypoints=websecure
+      - traefik.http.routers.miniflux-secure.rule=Host(`${FQDN}`)
+      - traefik.http.routers.miniflux-secure.tls=true
+      - traefik.http.routers.miniflux-secure.tls.certresolver=letsencrypt
+
+  db:
+    image: postgres:latest
+    init: true
+    container_name: minifluxdb
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - /patch/to/data/miniflux/postgresql:/var/lib/postgresql/data
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "miniflux"]
+      interval: 10s
+      start_period: 30s
+
+networks:
+  internal:
+    external: false
+  proxy:
+    external: true
