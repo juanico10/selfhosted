@@ -11,16 +11,17 @@ services:
     networks: 
       - red 
       - internal 
-    labels: 
-      - "traefik.backend=influxdb" 
-      - "traefik.enable=true" 
-      - "traefik.frontend.rule=Host:influxdb.example.com" 
-      - "traefik.port=8086" 
-      - "traefik.docker.network=red" 
-      - "traefik.enable=true" 
-      - "traefik.http.middlewares.securedi.chain.middlewares=influxdb,lista-blanca" 
-      - "traefik.http.routers.influxdb.middlewares=securedi" 
-      - "traefik.http.middlewares.lista-blanca.ipwhitelist.sourcerange=XX.XX.XX.XX, XX.XX.XX.XX" 
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.influxdb.loadbalancer.server.port=3000
+      - traefik.http.routers.influxdb.entrypoints=web
+      - traefik.http.routers.influxdb.rule=Host(`${FQDN}`)
+      - traefik.http.middlewares.influxdb-https-redirect.redirectscheme.scheme=websecure
+      - traefik.http.routers.influxdb.middlewares=influxdb-https-redirect
+      - traefik.http.routers.influxdb-secure.entrypoints=websecure
+      - traefik.http.routers.influxdb-secure.rule=Host(`${FQDN}`)
+      - traefik.http.routers.influxdb-secure.tls=true
+      - traefik.http.routers.influxdb-secure.tls.certresolver=letsencrypt
   
   grafana: 
     image: grafana/grafana 

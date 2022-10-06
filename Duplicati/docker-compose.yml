@@ -13,26 +13,25 @@ services:
     networks: 
       - red 
     environment: 
-      - PUID=1000 
-      - PGID=1000 
+      - PUID=0
+      - PGID=0
       - TZ=Europe/Madrid 
-    labels: 
-      # duplicati 
-      - "traefik.enable=true" 
-      - "traefik.http.routers.duplicati.rule=Host(`domain`)" 
-      - "traefik.http.routers.duplicati.entrypoints=websecure" 
-      - "traefik.http.routers.duplicati.tls=true" 
-      - "traefik.http.routers.duplicati.tls.certresolver=lets-encrypt" 
-      - "traefik.http.routers.duplicati.middlewares=securedupli" 
-      - "traefik.http.services.duplicati.loadbalancer.server.port=8200" 
-      - "traefik.http.middlewares.duplicati.headers.sslredirect=true" 
-      - "traefik.http.middlewares.securedupli.chain.middlewares=duplicati,lista-blanca-duplicati" 
-      - "traefik.http.middlewares.lista-blanca-duplicati.ipwhitelist.sourcerange=XX.XX.XX.XX, XX.XX.XX.XX" 
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.codimd.loadbalancer.server.port=8200
+      - traefik.http.routers.codimd.entrypoints=web
+      - traefik.http.routers.codimd.rule=Host(`${FQDN}`)
+      - traefik.http.middlewares.codimd-https-redirect.redirectscheme.scheme=websecure
+      - traefik.http.routers.codimd.middlewares=codimd-https-redirect
+      - traefik.http.routers.codimd-secure.entrypoints=websecure
+      - traefik.http.routers.codimd-secure.rule=Host(`${FQDN}`)
+      - traefik.http.routers.codimd-secure.tls=true
+      - traefik.http.routers.codimd-secure.tls.certresolver=letsencrypt
     volumes: 
-      - /patch/to/data/duplicati/duplicati:/config 
-      - /patch/to/data/duplicati/duplicati:/backups 
-      - /patch/to/data/duplicati/duplicati:/source 
+      - /patch/to/data/duplicati/config:/config 
+      - /home/${USER}:/home
+      - /mnt/hdd:/hdd
   
 networks: 
   red: 
-    external: true 
+    external: true
