@@ -1,0 +1,34 @@
+version: '3.3'
+
+services:
+  nginx-puma:
+    container_name: gollum-nginx
+    image: juanico/nginx-puma:gollum
+    init: true
+    restart: always
+    volumes:
+      - './static-files:/var/www/html'
+    depends_on:
+      - backend
+    ports:
+        - '80:80'
+
+  backend:
+    image: gollumwiki/gollum:master
+    restart: unless-stopped
+    command: --allow-uploads dir --emoji --mathjax --critic-markup
+    container_name: gollum
+    volumes:
+        - '/home/juan/docker/gollum/data:/wiki'
+    depends_on:
+      - backend-cache
+
+  backend-cache:
+    image: redis:alpine
+    container_name: backend-cache
+    healthcheck:
+      test: redis-cli ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
