@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  nginx-puma:
+    container_name: snibox-nginx
+    image: juanico/nginx-puma:snibox
+    init: true
+    restart: unless-stopped
+    volumes:
+      - './static-files:/var/www/html'
+    depends_on:
+      - backend
+    ports:
+        - '80:80'
+
+  backend:
+    container_name: snibox-backend
+    image: juanico/snibox:latest
+    init: true
+    volumes:
+        - './data/app/db:/app/db/database'
+    restart: unless-stopped
+    env_file:
+        - .env
+    depends_on:
+      - backend-cache
+
+  backend-cache:
+    image: redis:alpine
+    container_name: snibox-redis
+    healthcheck:
+      test: redis-cli ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
