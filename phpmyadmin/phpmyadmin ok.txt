@@ -1,0 +1,17 @@
+---
+version: "2.1"
+services:
+  phpmyadmin:
+    image: lscr.io/linuxserver/phpmyadmin:latest
+    container_name: myadmin
+    environment:
+      - TZ=Europe/Madrid
+      - PMA_HOST=
+      - PMA_ARBITRARY=1
+    volumes:
+      - ./phpmyadmin/appdata/config:/config
+    ports:
+      - 8080:80
+    restart: unless-stopped
+    networks:
+      - internal
