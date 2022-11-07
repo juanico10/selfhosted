@@ -1,4 +1,5 @@
 FROM alpine:3.15 AS builder
+MAINTAINER Juan Rodenas  <juanrodenas07@gmail.com>
 
 RUN apk add --update \
             --no-cache \
