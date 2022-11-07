@@ -1,5 +1,16 @@
 # Installation
 
+![Docker Pulls](https://img.shields.io/docker/pulls/juanico/webdav?logo=docker&style=for-the-badge)
+![Docker Image Version (latest by date)](https://img.shields.io/docker/v/juanico/webdav?logo=docker&style=for-the-badge)
+![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/juanico/webdav/latest?logo=docker&style=for-the-badge)
+
+The architectures supported by this image are:
+
+| Architecture | Available | Tag |
+| :----: | :----: | ---- |
+| x86-64 | ✅ | latest |
+| arm | ✅ | :arm |
+
 ## Requirements
 
 * [Traefik up and running](../traefik).
